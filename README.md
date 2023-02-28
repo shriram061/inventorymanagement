@@ -1,3 +1,3 @@
 # inventorymanagement
-Inventory Management coming soon
+Inventory Management 
 
