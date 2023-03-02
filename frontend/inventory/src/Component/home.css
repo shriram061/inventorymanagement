@@ -1,0 +1,18 @@
+#delete{
+    background-color: red;
+}
+#add{
+    background-color: rgb(16, 167, 237);
+}
+#view{
+    background-color: rgb(186, 172, 46);
+}
+#edit{
+    background-color: gray;
+}
+#body{
+    background-color: rgb(219, 253, 197);
+}
+
+nav{
+    position: sticky;}
