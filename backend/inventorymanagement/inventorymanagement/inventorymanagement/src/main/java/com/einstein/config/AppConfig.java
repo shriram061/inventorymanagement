@@ -15,13 +15,13 @@ public class AppConfig {
 	@Value("smtp.gmail.com")
 	private String host;
 
-	@Value("587")
+	@Value("***")
 	private int port;
 
-	@Value("subashriram13@gmail.com")
+	@Value("*****")
 	private String username;
 
-	@Value("hrmbinydfbedyuvo")
+	@Value("******")
 	private String password;
 
 	
