@@ -14,5 +14,5 @@ public interface ProductService {
 	public Product updateProduct(Product products,int id);
 	public void deleteProduct (int id);
 	List<Product> listAll(String keyword);
-	
+	List<Product> listAllId(int id);
 }
