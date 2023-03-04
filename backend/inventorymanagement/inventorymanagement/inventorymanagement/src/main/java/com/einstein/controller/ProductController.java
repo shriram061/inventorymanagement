@@ -79,5 +79,13 @@ public class ProductController {
 		
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
+	
+	@PostMapping("/searchid")
+	public ResponseEntity<?> searchId(@RequestParam int id) {
+		List<Product> products = prod.listAllId(id);
+		LOGGER.info("Started to search the details Id");
+		
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
 
 }
