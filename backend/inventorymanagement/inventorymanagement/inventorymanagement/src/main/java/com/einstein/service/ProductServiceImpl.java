@@ -29,10 +29,17 @@ public class ProductServiceImpl implements ProductService {
 	private EmailRepository emailIdRepository;
 	@Autowired
 	JavaMailSender javamailsender;
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
+	
 	
 	@Override
 	public Product saveProduct(Product product) {
+		if (product.getQuantity() < 0) {
+	        throw new IllegalArgumentException("Product quantity cannot be negative.");
+	    }
+		if (product.getPrice() < 0) {
+	        throw new IllegalArgumentException("Product price cannot be negative.");
+	        
+	    }
 		if (product.getQuantity() == 0) {
 			product.setStatus(ProductStatus.EMPTY);
 			sendEmail(product);
@@ -57,8 +64,15 @@ public class ProductServiceImpl implements ProductService {
 		Product product = productrepo.findByProductId(id);
 		product.setProductId(products.getProductId());
 		product.setProductName(products.getProductName());
-		product.setPrice(products.getPrice());
-		product.setQuantity(products.getQuantity());
+		if (products.getPrice() < 0) {
+	        throw new IllegalArgumentException("Price cannot be negative.");
+	        
+	    }else {
+		product.setPrice(products.getPrice());}
+		if (products.getQuantity() < 0) {
+	        throw new IllegalArgumentException("Quantity cannot be negative.");
+	    }else {
+		product.setQuantity(products.getQuantity());}
 		product.setValidity(products.getValidity());
 	
 		if (products.getQuantity() == 0) {
@@ -98,12 +112,21 @@ public class ProductServiceImpl implements ProductService {
 		if (keyword != null) {
 			return productrepo.search(keyword);
 		}
+		
+		return productrepo.findAll();
+	}
+	@Override
+	public List<Product> listAllId(int id) {
+		
+		if (id != 0) {
+			return productrepo.searchId(id);
+		}
 		return productrepo.findAll();
 	}
 	
-	public void sendEmail(Product service) {
+	public void sendEmail(Product product) {
 //		EmailId emailIdObject = emailIdRepository.findById(1).orElse(null);
-		for (int i = 100; i >= 1; i--) {
+		for (int i = 1; i <= 100; i++) { 
 //		String ownerEmail = (emailIdObject != null) ? emailIdObject.getEmailId() : null;
 		
 		
@@ -111,11 +134,11 @@ public class ProductServiceImpl implements ProductService {
 		if (emailIdObject != null) {
 		String ownerEmail = (emailIdObject != null) ? emailIdObject.getEmailId() : null;
 
-
+//		String ownerEmail = user.getEmailId();
 				SimpleMailMessage mailMessage = new SimpleMailMessage();
 				mailMessage.setTo(ownerEmail);
 				mailMessage.setSubject("Product Low Stock Reminder");
-				mailMessage.setText("Product Named:- " + service.getProductName() + ", Pricing: ₹"+service.getPrice() + " with quantity: " + service.getQuantity() + " and therefore the status of the product is "+ service.getStatus()+". Please reorder the product, to gain the stocks.");
+				mailMessage.setText("Dear " + emailIdObject.getUserName() + ",\n\n" +"Product Named:- " + product.getProductName() + ", Pricing: ₹"+product.getPrice() + " with quantity: " + product.getQuantity() + " and therefore the status of the product is "+ product.getStatus()+". Please reorder the product, to gain the stocks.");
 				javamailsender.send(mailMessage);
 	}}}
 
