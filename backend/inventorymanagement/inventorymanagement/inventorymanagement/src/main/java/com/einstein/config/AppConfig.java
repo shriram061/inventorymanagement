@@ -15,13 +15,13 @@ public class AppConfig {
 	@Value("smtp.gmail.com")
 	private String host;
 
-	@Value("***")
+	@Value("(any port of your choice)")
 	private int port;
 
-	@Value("*****")
+	@Value("(your email id)")
 	private String username;
 
-	@Value("******")
+	@Value("(generated password from smtp)")
 	private String password;
 
 	
